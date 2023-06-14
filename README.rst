@@ -30,7 +30,7 @@ For plaintext content
 
 ::
 
-  from filesify import Filesify
+  from filesify.models import Filesify
 
   class MyConfigModel(Filesify):
 
@@ -60,7 +60,7 @@ Extend CryptoFilesify:
 
 ::
 
-  from filesify import CryptoFilesify
+  from filesify.models import CryptoFilesify
 
   class MyConfigModel(CryptoFilesify):
 
@@ -100,12 +100,17 @@ updating your model instances.
 
 ::
 
-   # Create a new object
-   obj = MyConfigModel(file_path="/tmp/example.txt", file_content="Hello, World!")
+   # This create 'example.txt' containing 'Hello, World!'
+   obj = MyConfigModel()
+   obj.file_path = "/tmp/example.txt"
+   obj.file_content = "Hello, World!"
    obj.save()
 
+   # Equivalent to:
+   obj = MyConfigModel(file_path="/tmp/example.txt", file_content="Hello, World!")
+
    # The file generation can be triggered manually like this:
-   obj.create_file()  # This create 'example.txt' containing 'Hello, World!'
+   obj.create_file()  
 
 
 .. _filesify-model-file-removeal:
@@ -169,7 +174,7 @@ in your models and your admin classes.
 
   from django.db import models
   from django_solo.models import SingletonModel
-  from filesify import Filesify
+  from filesify.models import Filesify
 
   class MyConfigModel(SingletonModel, Filesify):
       class Meta:
@@ -253,3 +258,45 @@ that are extended from the Filesify class, you could use the
 
 
 Notice how you can optionally limit the models that the file creation should look at.
+
+
+Contribute to Django Filesify
+-----------------------------
+
+If you already have a working environnement with django running, you could install
+django-filesify in "editable" mode in that receiving project.
+
+Get the package source code somewhere outside your project folders, in this example,
+will will use the parent folder.
+
+::
+
+  cd you/working/django/project/
+
+  git clone https://github.com/lazybird/django-filesify.git ../django-filesify/
+
+  or
+
+  git clone git@github.com:lazybird/django-filesify.git ../django-filesify/
+
+
+Now the code inside ``../django-filesify/`` is where you'll make changes.
+
+You can install the package in then "editable" mode in you working project.
+Here we assume you are in you project's virtual environnement.
+
+::
+
+  pip uninstall django-filesify  # just in case you have it already...
+  pip install --editable ../django-filesify/
+
+
+
+Run tests :
+
+::
+
+  python ../django-filesify/filesify/tests/runtests.py
+
+
+  pytest ../django-filesify/filesify/tests/tests.py --ds=filesify.tests.settings
