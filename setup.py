@@ -11,7 +11,7 @@ def read(fname):
 
 
 setup(
-    name="filesify",
+    name="django-filesify",
     version=filesify.__version__,
     description=read("DESCRIPTION"),
     long_description=read("README.rst"),
